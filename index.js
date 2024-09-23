@@ -7,7 +7,7 @@ dotenv.config();
 // Configuración
 const STRAPI_URL = 'http://localhost:1337';
 const STRAPI_API_TOKEN = process.env.STRAPI_API_TOKEN;
-const FILE_PATH = './test.csv'; // Puedes cambiarlo a .json si quieres leer un archivo JSON
+const FILE_PATH = './test.csv'; 
 const CONTENT_TYPE = 'test-organizations';
 
 // Función para leer y parsear el archivo CSV
@@ -27,34 +27,46 @@ async function readJSON(filePath) {
   return JSON.parse(content);
 }
 
+// Validar si los campos obligatorios están presentes
+function validateRequiredFields(data) {
+  const requiredFields = ['idfromcsv', 'name', 'description'];
+
+  for (const field of requiredFields) {
+    if (!data[field]) {
+      console.error(`Error: El campo ${field} es obligatorio y está vacío`);
+      return false;
+    }
+  }
+  return true;
+}
+
+function removeEmptyFields(data) {
+  const cleanedData = {};
+  for (const key in data) {
+    if (data[key] && data[key].trim() !== '') {
+      cleanedData[key] = data[key];
+    }
+  }
+  return cleanedData;
+}
+
 // Función para enviar datos a Strapi
 async function sendToStrapi(data) {
-  // Validar que el campo email no esté vacío
-  if (!data.email) {
-    console.error('Error: El campo email no puede estar vacío');
+  if (!validateRequiredFields(data)) {
     return;
   }
 
-  // Preparamos los datos que vamos a enviar a Strapi
-  const validData = (({
-    idfromcsv,
-    name,
-    description,
-    website,
-    email,
-    phone,
-    description_en,
-    description_ar,
-  }) => ({
-    idfromcsv,
-    name,
-    description,
-    website,
-    email,
-    phone,
-    description_en,
-    description_ar,
-  }))(data);
+  // Preparamos los datos, asegurando que los campos opcionales estén presentes o como strings vacíos
+  const validData = removeEmptyFields({
+    idfromcsv: data.idfromcsv,
+    name: data.name,
+    description: data.description,
+    website: data.website || '',
+    email: data.email || '',
+    phone: data.phone || '',
+    description_en: data.description_en || '',
+    description_ar: data.description_ar || '',
+  });
 
   try {
     // Hacemos la petición POST a la API de Strapi
