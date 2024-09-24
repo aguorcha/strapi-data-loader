@@ -40,11 +40,30 @@ function validateRequiredFields(data) {
   return true;
 }
 
-function removeEmptyFields(data) {
+// Validación de email
+function isValidEmail(email) {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return email && typeof email === 'string' && emailRegex.test(email);
+}
+
+// Omitir los campos que son null, undefined o strings vacíos
+function omitEmptyFields(data) {
   const cleanedData = {};
   for (const key in data) {
-    if (data[key] && data[key].trim() !== '') {
-      cleanedData[key] = data[key];
+    const value = data[key];
+    if (value !== null && value !== undefined && value !== '') {
+      if (typeof value === 'string') {
+        const trimmedValue = value.trim();
+        if (trimmedValue !== '') {
+          if (key === 'email' && !isValidEmail(trimmedValue)) {
+            console.warn(`Advertencia: El email ${trimmedValue} no es válido y será omitido`);
+          } else {
+            cleanedData[key] = trimmedValue;
+          }
+        }
+      } else {
+        cleanedData[key] = value;
+      }
     }
   }
   return cleanedData;
@@ -57,16 +76,19 @@ async function sendToStrapi(data) {
   }
 
   // Preparamos los datos, asegurando que los campos opcionales estén presentes o como strings vacíos
-  const validData = removeEmptyFields({
+  const validData = omitEmptyFields({
     idfromcsv: data.idfromcsv,
     name: data.name,
     description: data.description,
-    website: data.website || '',
-    email: data.email || '',
-    phone: data.phone || '',
-    description_en: data.description_en || '',
-    description_ar: data.description_ar || '',
+    website: data.website,
+    email: data.email,
+    phone: data.phone,
+    description_en: data.description_en,
+    description_ar: data.description_ar,
   });
+
+  console.log('Datos a enviar:', JSON.stringify(validData, null, 2));
+  
 
   try {
     // Hacemos la petición POST a la API de Strapi
