@@ -1,4 +1,5 @@
 .env
 .csv
 .json
+.vscode
 node_modules/
