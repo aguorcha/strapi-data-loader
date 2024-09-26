@@ -1,0 +1,42 @@
+[
+  {
+    "idfromcsv": "0001",
+    "name": "Alianza por la Solidaridad",
+    "description": "Organización nacional que trabaja por la defensa de los derechos de las personas migrantes, sobre todo de las mujeres, como derecho a participar, a la ciudad, a los cuidados o laborales. Por eso, impulsan proyectos de ciudadanía y participación sociopolítica. También realizan proyectos con juventud y activismo para movilizar a este sector por su participación social; junto a proyectos de sensibilización sobre la justicia climática y prácticas positivas para la resiliencia climática de las comunidades.",
+    "website": "https://participamostransformamos.org/",
+    "email": "prueba@ggmailc.om",
+    "phone": "953445566",
+    "description_en": "A national organization that works to defend the rights of migrants, especially women, such as the right to participate, the right to the city, to care, and labor rights. For this reason, they promote citizenship and socio-political participation projects. They also carry out projects with youth and activists to mobilize this sector for social participation, along with awareness projects on climate justice and positive practices for the climate resilience of communities.",
+    "description_ar": "منظمة وطنية تعمل على الدفاع عن حقوق المهاجرين، وخاصة النساء، مثل حق المشاركة، والحق في المدينة، والرعاية، وحقوق العمل. لهذا السبب، تدفع المنظمة بمشاريع المواطنة والمشاركة الاجتماعية والسياسية. كما تقوم بتنفيذ مشاريع مع الشباب والناشطين لتحفيز هذا القطاع على المشاركة الاجتماعية، بالإضافة إلى مشاريع توعية حول العدالة المناخية والممارسات الإيجابية لتعزيز الصمود المناخي في المجتمعات."
+  },
+  {
+    "idfromcsv": "0003",
+    "name": "Biznegra",
+    "description": "Divulgación de memoria histórica de la mujer negra (Manifiesto Memoria Afro-andaluza) y feminismos negros",
+    "website": "https://biznegra.com/",
+    "email": "info@biznegra.com",
+    "phone": "91112233",
+    "description_en": "They also work on disseminating the historical memory of Black women (Afro-Andalusian Memory Manifesto) and Black feminisms.",
+    "description_ar": "كما تعمل على نشر الذاكرة التاريخية للمرأة السوداء (بيان الذاكرة الأفرو-أندلسية) والفكر النسوي الأسود."
+  },
+  {
+    "idfromcsv": "0004",
+    "name": "Asociación La Carpa",
+    "description": "Atención a personas en situación de calle para dar apoyo en materia de alimentos, ropa, mantas, apoyo psicoemocional y búsqueda de vivienda",
+    "website": "https://x.com/lacarpasevilla",
+    "email": "emailinventado@dddd.es",
+    "phone": "9539988776",
+    "description_en": "The organization provides care and support to people in street situations by offering food, clothing, blankets, psycho-emotional support, and assistance in finding housing.",
+    "description_ar": "تقدم المنظمة أيضًا الرعاية والدعم للأشخاص في وضعية الشارع، من خلال تقديم المساعدة الغذائية، الملابس، الأغطية، الدعم النفسي والعاطفي، والمساعدة في البحث عن مأوى."
+  },
+  {
+    "idfromcsv": "0005",
+    "name": "CEPAIM",
+    "description": "Fundación Cepaim es una entidad sin ánimo de lucro que trabaja desde 1994 por la convivencia y la cohesión social.",
+    "website": "https://www.cepaim.org/",
+    "email": "",
+    "phone": "",
+    "description_en": "Cepaim Foundation is a non-profit organization that has been working since 1994 for coexistence and social cohesion.",
+    "description_ar": "مؤسسة سيبايم هي منظمة غير ربحية تعمل منذ عام 1994 من أجل التعايش والاندماج الاجتماعي."
+  }
+]
