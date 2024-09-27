@@ -111,7 +111,7 @@ async function sendToStrapi(data) {
     );
     console.log(`Datos en '${DEFAULT_LOCALE}' enviados con éxito. ID: ${response.data.data.id}`);
 
-    const entryId = response.data.data.id;
+    const entryId = response.data.data.documentId;
     console.log("Intentando crear traducción para entryId:", entryId);
 
     for (const locale of LOCALES) {
@@ -141,11 +141,10 @@ async function createTranslation(id, locale, data) {
   try {
     console.log(`Creando traducción para el ID '${id}' en idioma '${locale}':`, data);
     const response = await axios.put(
-      `${STRAPI_URL}/api/${CONTENT_TYPE}/${id}`,
+      `${STRAPI_URL}/api/${CONTENT_TYPE}/${id}?locale=${locale}`,
       { 
         data: {
           ...data,
-          locale: locale,
         }
       },
       {
