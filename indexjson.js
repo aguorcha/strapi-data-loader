@@ -92,10 +92,10 @@ async function sendToStrapi(data, contentType) {
 }
 
 // Función para procesar todas las sedes
-async function processAllSedes(sedesData) {
+async function processAllSedes(sedesData, organizacionesMap) {
   const sedesMap = new Map();
   for (const sede of sedesData) {
-    const sedeData = prepareSedeData(sede);
+    const sedeData = prepareSedeData(sede, organizacionesMap);
     try {
       const response = await sendToStrapi(sedeData, 'sedes');
       sedesMap.set(sede._id, { strapiId: response.data.id, originalId: sede.id });
@@ -133,11 +133,15 @@ function prepareOrganizacionData(organizacion, sedesIds) {
   };
 }
 
-function prepareSedeData(sede) {
+function prepareSedeData(sede, organizacionesMap) {
   const { id, organizacion, ...restData } = sede;
+  const organizacionNombre = organizacion && organizacion.length > 0
+    ? organizacionesMap.get(organizacion[0])
+    : null;
   return {
     ...omitEmptyFields(restData),
-    idfromjson: id
+    idfromjson: id,
+    organizacion: organizacionNombre
   }
 }
 
@@ -147,8 +151,12 @@ async function main() {
     const organizacionesData = await readJSON(ORGANIZACIONES_FILE_PATH);
     const sedesData = await readJSON(SEDES_FILE_PATH);
 
+    const organizacionesMap = new Map(
+      organizacionesData.map(org => [org._id, org.nombre])
+    );
+    
     console.log(('Procesando sedes...'));
-    const sedesMap = await processAllSedes(sedesData);
+    const sedesMap = await processAllSedes(sedesData, organizacionesMap);
 
     console.log('Procesando organizaciones...');
     for (const organizacion of organizacionesData) {
