@@ -14,8 +14,8 @@ const STRAPI_URL = "http://localhost:1337";
 const STRAPI_API_TOKEN = process.env.STRAPI_API_TOKEN_JSON;
 console.log(STRAPI_API_TOKEN);
 const ORGANIZACIONES_FILE_PATH =
-  "../backend_strapi_5/dataProc/organizaciones.json";
-const SEDES_FILE_PATH = "../backend_strapi_5/dataProc/sedes.json";
+  "../emartv_backend/dataProc/organizaciones.json";
+const SEDES_FILE_PATH = "../emartv_backend/dataProc/sedes.json";
 const LOCALES = ["es", "en", "ar", "fr"];
 const DEFAULT_LOCALE = "es";
 const EXTRA_LOCALE = ["en", "ar", "fr"];
@@ -160,13 +160,14 @@ async function processOrganizacion(organizacion, sedesMap) {
 
   const organizacionData = prepareOrganizacionData(organizacion, sedesIds);
   const response = await sendToStrapi(organizacionData, "organizaciones");
-  const documentId = response.data.documentId;
+  const documentId = response.data.id;
+  
   for (const locale of EXTRA_LOCALE) {
     const localeOrganizacionData = prepareOrganizacionDataLocale(
       organizacion,
       locale
     );
-    createTranslation(
+    await createTranslation(
       documentId,
       locale,
       localeOrganizacionData,
@@ -198,11 +199,22 @@ function prepareOrganizacionData(organizacion, sedesIds, _locale="es") {
 function prepareOrganizacionDataLocale(organizacion, _locale = "es") {
   const { id, ...restData } = organizacion;
   let cleanedData = omitEmptyFields(restData);
-  cleanedData.descripcion_general =
-    cleanedData["descripcion_general_" + _locale];
+
+  if (_locale === "es") {
+    cleanedData.descripcion_general = cleanedData.descripcion_general_es;
+  } else {
+    cleanedData.descripcion_general = cleanedData[`descripcion_general_${_locale}`];
+  }
+  // cleanedData.descripcion_general =
+  //   cleanedData["descripcion_general_" + _locale];
+
   for (const locale of LOCALES) {
     delete cleanedData["descripcion_general_" + locale];
   }
+
+  // Eliminar el campo 'sedes' de las traducciones
+  delete cleanedData.sedes;
+
   return {
     ...cleanedData,
     idfromjson: id,

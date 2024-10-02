@@ -11,20 +11,17 @@ async function createTranslation(
   try {
     console.log(
       `Creando traducción para el ID '${id}' en idioma '${locale}':`,
-      data
+      JSON.stringify(data, null, 2)
     );
     const response = await axios.put(
-      `${STRAPI_URL}/api/${contentType}/${id}?locale=${locale}`,
-      {
-        data: {
-          ...data,
-        },
-      },
+      `${STRAPI_URL}/api/${contentType}/${id}`,
+      { data },
       {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${STRAPI_API_TOKEN}`,
         },
+        params: { locale },
       }
     );
     if (response.status === 200) {
