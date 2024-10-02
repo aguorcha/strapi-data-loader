@@ -3,10 +3,10 @@ const axios = require("axios");
 const dotenv = require("dotenv");
 const { createTranslation } = require("./api.js");
 
-const CONTENT_TYPES= {
-  ORGANIZACIONES: 'organizaciones',
-  SEDES: 'sedes',
-}
+const CONTENT_TYPES = {
+  ORGANIZACIONES: "organizaciones",
+  SEDES: "sedes",
+};
 dotenv.config();
 
 // Configuración
@@ -129,7 +129,14 @@ async function processAllSedes(sedesData, organizacionesMap) {
       for (const locale of EXTRA_LOCALE) {
         const localeSedeData = prepareSedeData(sede, organizacionesMap, locale);
         console.log("");
-        createTranslation(documentId, locale, localeSedeData, CONTENT_TYPES.SEDES, STRAPI_API_TOKEN, STRAPI_URL);
+        createTranslation(
+          documentId,
+          locale,
+          localeSedeData,
+          CONTENT_TYPES.SEDES,
+          STRAPI_API_TOKEN,
+          STRAPI_URL
+        );
       }
     } catch (error) {
       console.error(`Error al procesar la sede ${sede.id}:`, error.message);
@@ -152,16 +159,53 @@ async function processOrganizacion(organizacion, sedesMap) {
     .filter((id) => id !== null);
 
   const organizacionData = prepareOrganizacionData(organizacion, sedesIds);
-  await sendToStrapi(organizacionData, "organizaciones");
+  const response = await sendToStrapi(organizacionData, "organizaciones");
+  const documentId = response.data.documentId;
+  for (const locale of EXTRA_LOCALE) {
+    const localeOrganizacionData = prepareOrganizacionDataLocale(
+      organizacion,
+      locale
+    );
+    createTranslation(
+      documentId,
+      locale,
+      localeOrganizacionData,
+      CONTENT_TYPES.ORGANIZACIONES,
+      STRAPI_API_TOKEN,
+      STRAPI_URL
+    );
+  }
+  
+
 }
 
 // Función para preparar los datos de la organización
-function prepareOrganizacionData(organizacion, sedesIds) {
+function prepareOrganizacionData(organizacion, sedesIds, _locale="es") {
   const { id, ...restData } = organizacion;
+  let cleanedData = omitEmptyFields(restData);
+  cleanedData.descripcion_general =
+    cleanedData["descripcion_general_" + _locale];
+  for (const locale of LOCALES) {
+    delete cleanedData["descripcion_general_" + locale];
+  }
   return {
-    ...omitEmptyFields(restData),
+    ...cleanedData,
     idfromjson: id,
     sedes: sedesIds.map((id) => ({ id })),
+  };
+}
+
+function prepareOrganizacionDataLocale(organizacion, _locale = "es") {
+  const { id, ...restData } = organizacion;
+  let cleanedData = omitEmptyFields(restData);
+  cleanedData.descripcion_general =
+    cleanedData["descripcion_general_" + _locale];
+  for (const locale of LOCALES) {
+    delete cleanedData["descripcion_general_" + locale];
+  }
+  return {
+    ...cleanedData,
+    idfromjson: id,
   };
 }
 
@@ -197,10 +241,10 @@ async function main() {
     console.log("Procesando sedes...");
     const sedesMap = await processAllSedes(sedesData, organizacionesMap);
 
-    // console.log('Procesando organizaciones...');
-    // for (const organizacion of organizacionesData) {
-    //   await processOrganizacion(organizacion, sedesMap);
-    // }
+    console.log("Procesando organizaciones...");
+    for (const organizacion of organizacionesData) {
+      await processOrganizacion(organizacion, sedesMap);
+    }
 
     console.log("Proceso completado.");
   } catch (error) {

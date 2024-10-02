@@ -27,7 +27,11 @@ async function createTranslation(
         },
       }
     );
-    console.log(`Traducción en '${locale}' creada con éxito.`);
+    if (response.status === 200) {
+      console.log(`Traducción en '${locale}' creada con éxito.`);
+    } else {
+      console.log(`Traducción en '${locale}' no se pudo crear. Estado: ${response.status}`);
+    }
   } catch (error) {
     console.error(`Error al crear traducción en '${locale}':`, error.message);
     if (error.response) {
