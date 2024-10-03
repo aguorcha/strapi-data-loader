@@ -1,0 +1,67 @@
+{
+  "rows": [
+    {
+      "id": "0001",
+      "nombre": "Alianza por la Solidaridad",
+      "nombre_largo_es": null,
+      "nombre_largo_ar": null,
+      "nombre_largo_fr": null,
+      "nombre_largo_en": null,
+      "descripcion_general_es": "Organización nacional que trabaja por la defensa de los derechos de las personas migrantes, sobre todo de las mujeres, como derecho a participar, a la ciudad, a los cuidados o laborales. Por eso, impulsan proyectos de ciudadanía y participación sociopolítica. También realizan proyectos con juventud y activismo para movilizar a este sector por su participación social; junto a proyectos de sensibilización sobre la justicia climática y prácticas positivas para la resiliencia climática de las comunidades.",
+      "instagram_username": null,
+      "tiktok_username": null,
+      "twitter_username": null,
+      "facebook_page": null,
+      "web": "https://participamostransformamos.org/",
+      "email_general": null,
+      "telefono_general": null,
+      "sedes": [
+        "FyTcbUMKR_6_NPLIdNwQgQ"
+      ],
+      "descripcion_general_en": "A national organization working to defend the rights of migrant people, especially women, such as the right to participate, the right to the city, care rights, and labor rights. For this reason, they promote citizenship and socio-political participation projects. They also carry out projects with youth and activists to mobilize this sector for social participation, along with awareness projects on climate justice and positive practices for the climate resilience of communities.",
+      "descripcion_general_ar": "منظمة وطنية تعمل على الدفاع عن حقوق المهاجرين، خاصة النساء، مثل حق المشاركة وحق المدينة وحق الرعاية أو العمل. لهذا السبب، يروجون لمشاريع المواطنة والمشاركة الاجتماعية السياسية. كما يقومون بمشاريع مع الشباب والناشطين لتحفيز هذا القطاع على المشاركة الاجتماعية؛ إلى جانب مشاريع التوعية حول العدالة المناخية والممارسات الإيجابية من أجل مرونة المناخ في المجتمعات.",
+      "descripcion_general_fr": "Une organisation nationale qui travaille pour la défense des droits des personnes migrantes, en particulier des femmes, tels que le droit de participer, le droit à la ville, les droits aux soins ou au travail. C'est pourquoi ils impulsent des projets de citoyenneté et de participation sociopolitique. Ils réalisent également des projets avec la jeunesse et l'activisme pour mobiliser ce secteur pour sa participation sociale ; ainsi que des projets de sensibilisation sur la justice climatique et des pratiques positives pour la résilience climatique des communautés.",
+      "servicicios_organizacion_es": null,
+      "_locked": null,
+      "_locked_by": null,
+      "_archived": false,
+      "_creator": "f11574975cc34140999360142aab0f52@auth.local",
+      "_ctime": "2024-08-15T10:45:51.164+00:00",
+      "_last_modifier": "488542c67812421cb49e35d7d98f179a@auth.local",
+      "_mtime": "2024-09-30T08:12:10.467+00:00",
+      "_id": "Y-MqBHSYQaimQcU8WRehOA"
+    },
+    {
+      "id": "0005",
+      "nombre": "CEPAIM",
+      "nombre_largo_es": null,
+      "nombre_largo_ar": null,
+      "nombre_largo_fr": null,
+      "nombre_largo_en": null,
+      "descripcion_general_es": "Fundación Cepaim es una entidad sin ánimo de lucro que trabaja desde 1994 por la convivencia y la cohesión social.",
+      "instagram_username": null,
+      "tiktok_username": null,
+      "twitter_username": null,
+      "facebook_page": null,
+      "web": "https://www.cepaim.org/",
+      "email_general": null,
+      "telefono_general": null,
+      "sedes": [
+        "az1SfR4jQoaarIRRuvTgpg",
+        "Ja2DwlUnTGmXkB60Pt5hSw"
+      ],
+      "descripcion_general_en": null,
+      "descripcion_general_ar": null,
+      "descripcion_general_fr": null,
+      "servicicios_organizacion_es": null,
+      "_locked": null,
+      "_locked_by": null,
+      "_archived": false,
+      "_creator": "f11574975cc34140999360142aab0f52@auth.local",
+      "_ctime": "2024-09-17T12:22:02.625+00:00",
+      "_last_modifier": "f11574975cc34140999360142aab0f52@auth.local",
+      "_mtime": "2024-09-17T12:24:05.701+00:00",
+      "_id": "DPNwDkxLT5yY_fW2GvQHSg"
+    }
+  ]
+}
