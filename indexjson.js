@@ -38,7 +38,7 @@ function validateRequiredFields(data) {
 
   for (const field of requiredFields) {
     if (!data[field]) {
-      console.error(`Error: El campo ${field} es obligatorio y está vacío`);
+      console.error(`Error: El campo ${field} es obligatorio y está vacío para el id ${data.id || 'desconocido'}`);
       return false;
     }
   }
