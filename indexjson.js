@@ -234,10 +234,14 @@ function prepareSedeData(sede, organizacionesMap, _locale = "es") {
   for (const locale of LOCALES) {
     delete cleanedData["listado_de_servicios_" + locale];
   }
+
+  const nombreSedeNombreOrganizacion = `${cleanedData.nombre_sede || ''} - ${organizacionNombre || ''}`.trim();
+
   return {
     ...cleanedData,
     idfromjson: id,
     organizacion: organizacionNombre,
+    nombreSedeNombreOrganizacion: nombreSedeNombreOrganizacion
   };
 }
 
