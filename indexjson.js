@@ -165,7 +165,8 @@ async function processOrganizacion(organizacion, sedesMap) {
   for (const locale of EXTRA_LOCALE) {
     const localeOrganizacionData = prepareOrganizacionDataLocale(
       organizacion,
-      locale
+      locale,
+      sedesIds
     );
     console.log(documentId,locale, localeOrganizacionData);
     await createTranslation(
@@ -177,8 +178,6 @@ async function processOrganizacion(organizacion, sedesMap) {
       STRAPI_URL
     );
   }
-  
-
 }
 
 // Función para preparar los datos de la organización
@@ -197,7 +196,7 @@ function prepareOrganizacionData(organizacion, sedesIds, _locale="es") {
   };
 }
 
-function prepareOrganizacionDataLocale(organizacion, _locale = "es") {
+function prepareOrganizacionDataLocale(organizacion, _locale = "es", sedesIds) {
   const { id, ...restData } = organizacion;
   let cleanedData = omitEmptyFields(restData);
 
@@ -206,15 +205,13 @@ function prepareOrganizacionDataLocale(organizacion, _locale = "es") {
   } else {
     cleanedData.descripcion_general = cleanedData[`descripcion_general_${_locale}`]??cleanedData.descripcion_general_es;
   }
-  // cleanedData.descripcion_general =
-  //   cleanedData["descripcion_general_" + _locale];
 
   for (const locale of LOCALES) {
     delete cleanedData["descripcion_general_" + locale];
   }
 
-  // Eliminar el campo 'sedes' de las traducciones
-  delete cleanedData.sedes;
+  // incluir el campo 'sedes' de las traducciones
+  cleanedData.sedes = sedesIds.map((id) => ({ id }));
 
   return {
     ...cleanedData,
