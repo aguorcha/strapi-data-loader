@@ -116,9 +116,14 @@ async function processAllSedes(sedesData, organizacionesMap) {
   const sedesMap = new Map();
   for (const sede of sedesData) {
     const sedeData = prepareSedeData(sede, organizacionesMap, DEFAULT_LOCALE);
+
+    if (!sedeData.organizacion) {
+      console.warn(`Advertencia: La sede con ID '${sede.id}' no tiene una organización asociada y no será asignada`);
+      continue;
+    }
+
     try {
       const response = await sendToStrapi(sedeData, "sedes");
-      console.log("response", response.data.documentId);
 
       const documentId = response.data.documentId;
       sedesMap.set(sede._id, {
@@ -128,7 +133,6 @@ async function processAllSedes(sedesData, organizacionesMap) {
 
       for (const locale of EXTRA_LOCALE) {
         const localeSedeData = prepareSedeData(sede, organizacionesMap, locale);
-        console.log("");
         createTranslation(
           documentId,
           locale,
