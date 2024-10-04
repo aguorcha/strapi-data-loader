@@ -38,7 +38,7 @@
         "f56K_iGbQdSKQkm4d0SN4Q"
       ],
       "nombre_sede": "Málaga",
-      "listado_de_servicios": null,
+      "listado_de_servicios_es": null,
       "es_sede_principal": true,
       "tipo_calle": null,
       "direccion": null,
@@ -70,7 +70,7 @@
         "GRJgCIJ9SjeXPlJKhLrd9A"
       ],
       "nombre_sede": "Sevilla",
-      "listado_de_servicios": null,
+      "listado_de_servicios_es": null,
       "es_sede_principal": true,
       "tipo_calle": "calle",
       "direccion": "Mercurio",
@@ -102,7 +102,7 @@
         "DPNwDkxLT5yY_fW2GvQHSg"
       ],
       "nombre_sede": "Almería",
-      "listado_de_servicios": null,
+      "listado_de_servicios_es": null,
       "es_sede_principal": null,
       "tipo_calle": "calle",
       "direccion": "Berenguel",
@@ -134,7 +134,7 @@
         "DPNwDkxLT5yY_fW2GvQHSg"
       ],
       "nombre_sede": "El Ejido",
-      "listado_de_servicios": null,
+      "listado_de_servicios_es": null,
       "es_sede_principal": null,
       "tipo_calle": "paraje",
       "direccion": "Soto Molinero",
@@ -166,7 +166,7 @@
         "bMzq-0uZSlqMbuSfd3rKdg"
       ],
       "nombre_sede": "Huelva",
-      "listado_de_servicios": null,
+      "listado_de_servicios_es": null,
       "es_sede_principal": true,
       "tipo_calle": "avenida",
       "direccion": "Cristóbal Colón",
@@ -198,7 +198,7 @@
         "KqVqLI_rRSmbbtUTZb1QuA"
       ],
       "nombre_sede": "Lepe",
-      "listado_de_servicios": null,
+      "listado_de_servicios_es": null,
       "es_sede_principal": true,
       "tipo_calle": "calle",
       "direccion": "Esparteros",
