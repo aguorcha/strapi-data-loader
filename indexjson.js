@@ -12,10 +12,9 @@ dotenv.config();
 // Configuración
 const STRAPI_URL = "http://localhost:1337";
 const STRAPI_API_TOKEN = process.env.STRAPI_API_TOKEN_JSON;
-console.log(STRAPI_API_TOKEN);
-const ORGANIZACIONES_FILE_PATH =
-  "./organizaciones.json";
-const SEDES_FILE_PATH = "./sedes.json";
+console.log("Token usado:", STRAPI_API_TOKEN);
+const ORGANIZACIONES_FILE_PATH = "../emartv_backend/dataProc/organizaciones.json";
+const SEDES_FILE_PATH = "../emartv_backend/dataProc/sedes.json";
 const LOCALES = ["es", "en", "ar", "fr"];
 const DEFAULT_LOCALE = "es";
 const EXTRA_LOCALE = ["en", "ar", "fr"];
@@ -34,7 +33,7 @@ async function readJSON(filePath) {
 
 // Validar si los campos obligatorios están presentes
 function validateRequiredFields(data) {
-  const requiredFields = ["id", "nombre", "descripcion_general_es"];
+  const requiredFields = ["id", "nombre", "descripcion_general"];
 
   for (const field of requiredFields) {
     if (!data[field]) {
@@ -76,6 +75,35 @@ function omitEmptyFields(data) {
     }
   }
   return cleanedData;
+}
+
+// Función para borrar los datos cargados
+async function cleanLoadedData() {
+  try {
+    console.log("Limpiando datos existentes en Strapi...");
+    
+    const response = await axios.get(
+      `${STRAPI_URL}/api/sedes/clean`,
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${STRAPI_API_TOKEN}`,
+        },
+      }
+    );
+    
+    console.log("Datos limpiados exitosamente.");
+    return response.data;
+  } catch (error) {
+    console.error("Error al limpiar los datos:", error.message);
+    if (error.response) {
+      console.error(
+        "Respuesta del servidor:",
+        JSON.stringify(error.response.data, null, 2)
+      );
+    }
+    throw error;
+  }
 }
 
 // Función para enviar datos a Strapi
@@ -162,7 +190,7 @@ async function processOrganizacion(organizacion, sedesMap) {
     })
     .filter((id) => id !== null);
 
-  const organizacionData = prepareOrganizacionData(organizacion, sedesIds);
+  const organizacionData = prepareOrganizacionData(organizacion, sedesIds, "es");
   const response = await sendToStrapi(organizacionData, "organizaciones");
   const documentId = response.data.documentId;
   
@@ -188,11 +216,21 @@ async function processOrganizacion(organizacion, sedesMap) {
 function prepareOrganizacionData(organizacion, sedesIds, _locale="es") {
   const { id, ...restData } = organizacion;
   let cleanedData = omitEmptyFields(restData);
-  cleanedData.descripcion_general =
-    cleanedData["descripcion_general_" + _locale];
+  
+  // Para el idioma por defecto, envía los campos sin sufijo
+  if (_locale === "es") {
+    cleanedData.descripcion_general = cleanedData.descripcion_general;
+    cleanedData.nombre_largo = cleanedData.nombre_largo;
+    cleanedData.listado_servicios_organizacion = cleanedData.listado_servicios_organizacion;
+  }
+
+  // Elimina los nombre de otros idiomas para no mandarlos
   for (const locale of LOCALES) {
     delete cleanedData["descripcion_general_" + locale];
+    delete cleanedData["nombre_largo_" + locale];
+    delete cleanedData["listado_servicios_organizacion_" + locale];
   }
+
   return {
     ...cleanedData,
     idfromjson: id,
@@ -204,14 +242,18 @@ function prepareOrganizacionDataLocale(organizacion, _locale = "es", sedesIds) {
   const { id, ...restData } = organizacion;
   let cleanedData = omitEmptyFields(restData);
 
-  if (_locale === "es") {
-    cleanedData.descripcion_general = cleanedData.descripcion_general_es;
-  } else {
-    cleanedData.descripcion_general = cleanedData[`descripcion_general_${_locale}`]??cleanedData.descripcion_general_es;
+  // Asignar los campos que se debe "traducir" según el idioma
+  if (_locale !== "es") {
+    cleanedData.descripcion_general = cleanedData[`descripcion_general_${_locale}`];
+    cleanedData.nombre_largo = cleanedData[`nombre_largo_${_locale}`];
+    cleanedData.listado_servicios_organizacion = cleanedData[`listado_servicios_organizacion_${_locale}`];
   }
 
+  // Elimina los campos en otros idiomas para no enviarlos
   for (const locale of LOCALES) {
-    delete cleanedData["descripcion_general_" + locale];
+    delete cleanedData[`descripcion_general_${locale}`];
+    delete cleanedData[`nombre_largo_${locale}`];
+    delete cleanedData[`listado_servicios_organizacion_${locale}`];
   }
 
   // incluir el campo 'sedes' de las traducciones
@@ -230,8 +272,7 @@ function prepareSedeData(sede, organizacionesMap, _locale = "es") {
       ? organizacionesMap.get(organizacion[0])
       : null;
   let cleanedData = omitEmptyFields(restData);
-  cleanedData.listado_de_servicios =
-    cleanedData["listado_de_servicios_" + _locale];
+  cleanedData["listado_de_servicios_" + _locale] = cleanedData["listado_de_servicios_" + _locale];
   for (const locale of LOCALES) {
     delete cleanedData["listado_de_servicios_" + locale];
   }
@@ -249,6 +290,8 @@ function prepareSedeData(sede, organizacionesMap, _locale = "es") {
 // Función principal para leer los datos y enviarlos a Strapi
 async function main() {
   try {
+    await cleanLoadedData();
+
     const organizacionesData = await readJSON(ORGANIZACIONES_FILE_PATH);
     const sedesData = await readJSON(SEDES_FILE_PATH);
 
