@@ -144,6 +144,7 @@ async function processAllSedes(sedesData, organizacionesMap) {
   const sedesMap = new Map();
   for (const sede of sedesData) {
     const sedeData = prepareSedeData(sede, organizacionesMap, DEFAULT_LOCALE);
+    
 
     if (!sedeData.organizacion) {
       console.warn(`Advertencia: La sede con ID '${sede.id}' no tiene una organización asociada y no será asignada`);
