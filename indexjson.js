@@ -1,7 +1,25 @@
 const fs = require("fs").promises;
 const axios = require("axios");
 const dotenv = require("dotenv");
-const { createTranslation } = require("./api.js");
+const {
+  createTranslation,
+  cleanLoadedData,
+  sendToStrapi,
+} = require("./api.js");
+const {
+  readJSON,
+  validateRequiredFields,
+  omitEmptyFields,
+} = require("./dataProcutils.js");
+
+const { STRAPI_URL,
+    STRAPI_API_TOKEN,
+    ORGANIZACIONES_FILE_PATH,
+    SEDES_FILE_PATH,
+    LOCALES,
+    DEFAULT_LOCALE,
+    EXTRA_LOCALE
+} = require("./config.js");
 
 const CONTENT_TYPES = {
   ORGANIZACIONES: "organizaciones",
@@ -9,135 +27,11 @@ const CONTENT_TYPES = {
 };
 dotenv.config();
 
-// Configuración
-const STRAPI_URL = "http://localhost:1337";
-const STRAPI_API_TOKEN = process.env.STRAPI_API_TOKEN_JSON;
-console.log("Token usado:", STRAPI_API_TOKEN);
-const ORGANIZACIONES_FILE_PATH = "../emartv_backend/dataProc/organizaciones.json";
-const SEDES_FILE_PATH = "../emartv_backend/dataProc/sedes.json";
-const LOCALES = ["es", "en", "ar", "fr"];
-const DEFAULT_LOCALE = "es";
-const EXTRA_LOCALE = ["en", "ar", "fr"];
 
-// Función para leer un archivo JSON
-async function readJSON(filePath) {
-  const content = await fs.readFile(filePath, { encoding: "utf-8" });
-  const parsedContent = JSON.parse(content);
-  if (parsedContent.rows && Array.isArray(parsedContent.rows)) {
-    return parsedContent.rows;
-  }
-  throw new Error(
-    `El archivo JSON ${filePath} debe contener un array de objetos en la propiedad "rows"`
-  );
-}
 
-// Validar si los campos obligatorios están presentes
-function validateRequiredFields(data) {
-  const requiredFields = ["id", "nombre", "descripcion_general"];
 
-  for (const field of requiredFields) {
-    if (!data[field]) {
-      console.error(`Error: El campo ${field} es obligatorio y está vacío para el id ${data.id || 'desconocido'}`);
-      return false;
-    }
-  }
-  return true;
-}
 
-// Validación de email
-function isValidEmail(email) {
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  return email && typeof email === "string" && emailRegex.test(email);
-}
 
-// Omitir los campos que son null, undefined o strings vacíos, y los que empiezan por '_'
-function omitEmptyFields(data) {
-  const cleanedData = {};
-  for (const key in data) {
-    if (!key.startsWith("_")) {
-      const value = data[key];
-      if (value !== null && value !== undefined && value !== "") {
-        if (typeof value === "string") {
-          const trimmedValue = value.trim();
-          if (trimmedValue !== "") {
-            if (key === "email_general" && !isValidEmail(trimmedValue)) {
-              console.warn(
-                `Advertencia: El email ${trimmedValue} no es válido y será omitido`
-              );
-            } else {
-              cleanedData[key] = trimmedValue;
-            }
-          }
-        } else {
-          cleanedData[key] = value;
-        }
-      }
-    }
-  }
-  return cleanedData;
-}
-
-// Función para borrar los datos cargados
-async function cleanLoadedData() {
-  try {
-    console.log("Limpiando datos existentes en Strapi...");
-    
-    const response = await axios.get(
-      `${STRAPI_URL}/api/sedes/clean`,
-      {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${STRAPI_API_TOKEN}`,
-        },
-      }
-    );
-    
-    console.log("Datos limpiados exitosamente.");
-    return response.data;
-  } catch (error) {
-    console.error("Error al limpiar los datos:", error.message);
-    if (error.response) {
-      console.error(
-        "Respuesta del servidor:",
-        JSON.stringify(error.response.data, null, 2)
-      );
-    }
-    throw error;
-  }
-}
-
-// Función para enviar datos a Strapi
-async function sendToStrapi(data, contentType) {
-  try {
-    console.log(
-      `Enviando datos a ${contentType}:`,
-      JSON.stringify(data, null, 2)
-    );
-    const response = await axios.post(
-      `${STRAPI_URL}/api/${contentType}`,
-      { data },
-      {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${STRAPI_API_TOKEN}`,
-        },
-      }
-    );
-    console.log(
-      `Datos enviados con éxito a ${contentType}. ID: ${response.data.data.id}`
-    );
-    return response.data;
-  } catch (error) {
-    console.error(`Error al enviar datos a ${contentType}:`, error.message);
-    if (error.response) {
-      console.error(
-        "Respuesta del servidor:",
-        JSON.stringify(error.response.data, null, 2)
-      );
-    }
-    throw error;
-  }
-}
 
 // Función para procesar todas las sedes
 async function processAllSedes(sedesData, organizacionesMap) {
