@@ -194,6 +194,13 @@ async function main() {
       organizacionesData.map((org) => [org._id, org.nombre])
     );
 
+    // TMP: remove fields with relations
+    for (const sede of sedesData) {
+      delete sede.areas;
+      delete sede.colectivos_prioritarios;
+      delete sede.colectivos_exclusivos;
+    }
+
     console.log("Procesando sedes...");
     const sedesMap = await processAllSedes(sedesData, organizacionesMap);
 
