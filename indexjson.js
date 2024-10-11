@@ -12,25 +12,25 @@ const {
   omitEmptyFields,
 } = require("./dataProcutils.js");
 
-const { STRAPI_URL,
-    STRAPI_API_TOKEN,
-    ORGANIZACIONES_FILE_PATH,
-    SEDES_FILE_PATH,
-    LOCALES,
-    DEFAULT_LOCALE,
-    EXTRA_LOCALE
+const {
+  STRAPI_URL,
+  STRAPI_API_TOKEN,
+  LOCALES,
+  DEFAULT_LOCALE,
+  EXTRA_LOCALE,
+  CONTENT_TYPES,
 } = require("./config.js");
 
-const CONTENT_TYPES = {
-  ORGANIZACIONES: "organizaciones",
-  SEDES: "sedes",
-};
+const { createAreasAndMacro } = require("./areas.js");
+
+const FILE_PATH = "./";
+const ORGANIZACIONES_FILE_PATH = FILE_PATH + "organizaciones.json";
+const AREAS_FILE_PATH = FILE_PATH + "areas.json";
+const COLECTIVOS_FILE_PATH = FILE_PATH + "colectivos.json";
+const MACRO_AREAS_FILE_PATH = FILE_PATH + "macroareas.json";
+const SEDES_FILE_PATH = FILE_PATH + "sedes.json";
+
 dotenv.config();
-
-
-
-
-
 
 
 // Función para procesar todas las sedes
@@ -189,6 +189,12 @@ async function main() {
 
     const organizacionesData = await readJSON(ORGANIZACIONES_FILE_PATH);
     const sedesData = await readJSON(SEDES_FILE_PATH);
+    const areasData = await readJSON(AREAS_FILE_PATH);
+    const colectivosData = await readJSON(COLECTIVOS_FILE_PATH);
+    const macroAreasData = await readJSON(MACRO_AREAS_FILE_PATH);
+
+
+   const areas = createAreasAndMacro(areasData, macroAreasData);
 
     const organizacionesMap = new Map(
       organizacionesData.map((org) => [org._id, org.nombre])
@@ -209,7 +215,7 @@ async function main() {
       await processOrganizacion(organizacion, sedesMap);
     }
 
-    console.log("Proceso completado.");
+  //   console.log("Proceso completado.");
   } catch (error) {
     console.error("Error:", error.message);
   }
