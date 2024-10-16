@@ -77,7 +77,7 @@ async function processOrganizacion(organizacion, sedesMap) {
 function prepareOrganizacionData(organizacion, sedesIds, _locale = "es") {
   const { id, ...restData } = organizacion;
   let cleanedData = omitEmptyFields(restData);
-
+  cleanedData.logo = cleanedData.logo[0]??'';
   // Para el idioma por defecto, envía los campos sin sufijo
   if (_locale === "es") {
     cleanedData.descripcion_general = cleanedData.descripcion_general;
@@ -103,6 +103,8 @@ function prepareOrganizacionData(organizacion, sedesIds, _locale = "es") {
 function prepareOrganizacionDataLocale(organizacion, _locale = "es", sedesIds) {
   const { id, ...restData } = organizacion;
   let cleanedData = omitEmptyFields(restData);
+    cleanedData.logo = cleanedData.logo[0] ?? "";
+
 
   // Asignar los campos que se debe "traducir" según el idioma
   if (_locale !== "es") {
