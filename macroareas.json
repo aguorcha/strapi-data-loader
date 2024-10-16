@@ -1,7 +1,7 @@
 {
   "rows": [
     {
-      "nombre": "Salud",
+      "nombre_es": "Salud",
       "nombre_en": null,
       "nombre_fr": null,
       "nombre_ar": null,
@@ -25,7 +25,7 @@
       "_id": "aw4AHnHwRG2hlKL7eHWMaA"
     },
     {
-      "nombre": "Educación",
+      "nombre_es": "Educación",
       "nombre_en": null,
       "nombre_fr": null,
       "nombre_ar": null,
@@ -48,7 +48,7 @@
       "_id": "AEoL8WWJTIGRcm6tlIbMng"
     },
     {
-      "nombre": "Vivienda",
+      "nombre_es": "Vivienda",
       "nombre_en": null,
       "nombre_fr": null,
       "nombre_ar": null,
@@ -70,7 +70,7 @@
       "_id": "X9IUD3eHTAWlKzefWv-CCA"
     },
     {
-      "nombre": "Empleo",
+      "nombre_es": "Empleo",
       "nombre_en": null,
       "nombre_fr": null,
       "nombre_ar": null,
@@ -89,7 +89,7 @@
       "_id": "SNxaOVEZQIeIoV9O8P2X4g"
     },
     {
-      "nombre": "Asesoría jurídica y legal",
+      "nombre_es": "Asesoría jurídica y legal",
       "nombre_en": null,
       "nombre_fr": null,
       "nombre_ar": null,
@@ -110,7 +110,7 @@
       "_id": "IaI3U58WRa2w6NR6u2LJhg"
     },
     {
-      "nombre": "Servicios básicos",
+      "nombre_es": "Servicios básicos",
       "nombre_en": null,
       "nombre_fr": null,
       "nombre_ar": null,
@@ -129,7 +129,7 @@
       "_id": "es4p3RwjRbi7nBLbibcrTg"
     },
     {
-      "nombre": "Traducción y mediación intercultural",
+      "nombre_es": "Traducción y mediación intercultural",
       "nombre_en": null,
       "nombre_fr": null,
       "nombre_ar": null,
@@ -147,7 +147,7 @@
       "_id": "RvxuhJGFTs6sSJuhHf-acA"
     },
     {
-      "nombre": "Ocio",
+      "nombre_es": "Ocio",
       "nombre_en": null,
       "nombre_fr": null,
       "nombre_ar": null,
@@ -166,7 +166,7 @@
       "_id": "ezbbF-t8TjKs1_3Q6XHy2w"
     },
     {
-      "nombre": "Publicaciones",
+      "nombre_es": "Publicaciones",
       "nombre_en": null,
       "nombre_fr": null,
       "nombre_ar": null,
@@ -183,7 +183,7 @@
       "_id": "Jc1-Ly1iQuSUuZ21AxskTQ"
     },
     {
-      "nombre": null,
+      "nombre_es": null,
       "nombre_en": null,
       "nombre_fr": null,
       "nombre_ar": null,

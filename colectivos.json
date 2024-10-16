@@ -2,7 +2,7 @@
   "rows": [
     {
       "slug": "mujeres",
-      "nombre": "mujeres",
+      "nombre_es": "mujeres",
       "nombre_fr": null,
       "nombre_en": null,
       "nombre_ar": null,
@@ -34,7 +34,7 @@
     },
     {
       "slug": "LGTBIQ+",
-      "nombre": "LGTBIQ+",
+      "nombre_es": "LGTBIQ+",
       "nombre_fr": null,
       "nombre_en": null,
       "nombre_ar": null,
@@ -51,7 +51,7 @@
     },
     {
       "slug": "migrantes",
-      "nombre": "migrantes",
+      "nombre_es": "migrantes",
       "nombre_fr": null,
       "nombre_en": null,
       "nombre_ar": null,
@@ -85,7 +85,7 @@
     },
     {
       "slug": "comunidad-gitana",
-      "nombre": "comunidad gitana",
+      "nombre_es": "comunidad gitana",
       "nombre_fr": null,
       "nombre_en": null,
       "nombre_ar": null,
@@ -102,7 +102,7 @@
     },
     {
       "slug": "comunidad-afro",
-      "nombre": "comunidad afro",
+      "nombre_es": "comunidad afro",
       "nombre_fr": null,
       "nombre_en": null,
       "nombre_ar": null,
@@ -124,7 +124,7 @@
     },
     {
       "slug": "exclusion-social",
-      "nombre": "riesgo exclusión social",
+      "nombre_es": "riesgo exclusión social",
       "nombre_fr": null,
       "nombre_en": null,
       "nombre_ar": null,
@@ -141,7 +141,7 @@
     },
     {
       "slug": "infancia y adolescencia",
-      "nombre": "infancia y adolescencia",
+      "nombre_es": "infancia y adolescencia",
       "nombre_fr": null,
       "nombre_en": null,
       "nombre_ar": null,
@@ -158,7 +158,7 @@
     },
     {
       "slug": "diversidad-funcional",
-      "nombre": "diversidad funcional",
+      "nombre_es": "diversidad funcional",
       "nombre_fr": null,
       "nombre_en": null,
       "nombre_ar": null,
@@ -175,7 +175,7 @@
     },
     {
       "slug": "sin-hogar",
-      "nombre": "personas sin hogar",
+      "nombre_es": "personas sin hogar",
       "nombre_fr": null,
       "nombre_en": null,
       "nombre_ar": null,
@@ -192,7 +192,7 @@
     },
     {
       "slug": "victimas-discriminacion",
-      "nombre": "víctimas discriminación",
+      "nombre_es": "víctimas discriminación",
       "nombre_fr": null,
       "nombre_en": null,
       "nombre_ar": null,
@@ -213,7 +213,7 @@
     },
     {
       "slug": "victimas-trata",
-      "nombre": "víctimas de trata",
+      "nombre_es": "víctimas de trata",
       "nombre_fr": null,
       "nombre_en": null,
       "nombre_ar": null,
@@ -230,7 +230,7 @@
     },
     {
       "slug": "migrantes-latinoamericanos",
-      "nombre": "migrantes latinoamericanos",
+      "nombre_es": "migrantes latinoamericanos",
       "nombre_fr": null,
       "nombre_en": null,
       "nombre_ar": null,
@@ -252,7 +252,7 @@
     },
     {
       "slug": "Jóvenes",
-      "nombre": "Jóvenes",
+      "nombre_es": "Jóvenes",
       "nombre_fr": null,
       "nombre_en": null,
       "nombre_ar": null,
@@ -274,8 +274,8 @@
       "_id": "GOOssp6XQbeQ8C9DZqCSmw"
     },
     {
-      "slug": "personas reclusas y exreclusas",
-      "nombre": null,
+      "slug": "reclusas",
+      "nombre_es": "personas reclusas y exreclusas",
       "nombre_fr": null,
       "nombre_en": null,
       "nombre_ar": null,
@@ -286,8 +286,8 @@
       "_archived": false,
       "_creator": "6e665f59197f45a4b832c45296705692@auth.local",
       "_ctime": "2024-10-10T14:12:59.822+00:00",
-      "_last_modifier": "6e665f59197f45a4b832c45296705692@auth.local",
-      "_mtime": "2024-10-10T14:13:09.252+00:00",
+      "_last_modifier": "5411f83dbc7848cb8758fdd5810b4cc3@auth.local",
+      "_mtime": "2024-10-16T08:36:57.637+00:00",
       "_id": "XEWLwryLT7SWLX2eyE1XIA"
     }
   ]
