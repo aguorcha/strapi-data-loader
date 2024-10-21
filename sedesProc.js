@@ -1,4 +1,5 @@
-// Función para procesar todas las sedes
+const axios = require('axios');
+require('dotenv').config();
 
 const {
   STRAPI_URL,
@@ -10,6 +11,43 @@ const {
 } = require("./config.js");
 const { createTranslation, sendToStrapi } = require("./api.js");
 const { omitEmptyFields } = require("./dataProcutils.js"); // Assuming these functions are in utils.js
+
+const MAPBOX_ACCESS_TOKEN = process.env.MAPBOX_ACCESS_TOKEN;
+
+async function getCoordinates(sede) {
+  const { tipo_calle, direccion, numero, localidad, provincia, cp } = sede;
+
+  if (!direccion || !localidad || !provincia) {
+    console.log(`Skipping sede ${sede.id} due to incomplete address information`);
+    return null;
+  }
+
+  const address = `${tipo_calle || ''} ${direccion} ${numero || ''}`.trim();
+  const query = `${address}, ${localidad}, ${provincia} ${cp || ''}`.trim();
+  const encodedQuery = encodeURIComponent(query);
+
+  const url = `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodedQuery}.json`;
+
+  try {
+    const response = await axios.get(url, {
+      params: {
+        access_token: MAPBOX_ACCESS_TOKEN,
+        country: 'es'
+      }
+    });
+
+    if (response.data.features && response.data.features.length > 0) {
+      const [longitude, latitude] = response.data.features[0].center;
+      return { latitude, longitude };
+    } else {
+      console.log(`No coordinates found for sede ${sede.id}`);
+      return null;
+    }
+  } catch (error) {
+    console.error(`Error getting coordinates for sede ${sede.id}:`, error.message);
+    return null;
+  }
+}
 
 async function processAllSedes(
   sedesData,
@@ -53,7 +91,7 @@ async function processAllSedes(
       });
 
       for (const locale of EXTRA_LOCALE) {
-        const localeSedeData = prepareSedeData(sede, organizacionesMap, locale);
+        const localeSedeData = await prepareSedeData(sede, organizacionesMap, locale);
        // console.log(locale, localeSedeData);
         createTranslation(
           documentId,
@@ -71,7 +109,7 @@ async function processAllSedes(
   return sedesMap;
 }
 
-function prepareSedeData(sede, organizacionesMap, _locale = "es") {
+async function prepareSedeData(sede, organizacionesMap, _locale = "es") {
   const { id, organizacion, ...restData } = sede;
   const organizacionNombre =
     organizacion && organizacion.length > 0
@@ -87,6 +125,14 @@ function prepareSedeData(sede, organizacionesMap, _locale = "es") {
   const nombreSedeNombreOrganizacion = `${cleanedData.nombre_sede || ""} - ${
     organizacionNombre || ""
   }`.trim();
+
+  const coordinates = await getCoordinates(cleanedData);
+  if (coordinates) {
+    cleanedData.latitud = coordinates.latitude;
+    cleanedData.longitud = coordinates.longitude;
+  } else {
+    console.warn(`No se pudieron obtener coordenadas para la sede: ${id}`);
+  }
 
   return {
     ...cleanedData,

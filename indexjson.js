@@ -1,6 +1,9 @@
 const fs = require("fs").promises;
 const axios = require("axios");
 const dotenv = require("dotenv");
+const util = require('util');
+dotenv.config();
+
 const {
   createTranslation,
   cleanLoadedData,
@@ -31,8 +34,29 @@ const AREAS_FILE_PATH = FILE_PATH + "areas.json";
 const COLECTIVOS_FILE_PATH = FILE_PATH + "colectivos.json";
 const MACRO_AREAS_FILE_PATH = FILE_PATH + "macroareas.json";
 const SEDES_FILE_PATH = FILE_PATH + "sedes.json";
+const OUTPUT_FILE_PATH = FILE_PATH + "output.json";
 
-dotenv.config();
+let consoleOutput = [];
+const originalConsoleLog = console.log;
+const origianlConsoleError = console.error;
+console.log = (...args) => {
+  consoleOutput.push(util.format(...args));
+  originalConsoleLog(...args);
+};
+console.error = (...args) => {
+  consoleOutput.push(util.format(...args));
+  origianlConsoleError(...args);
+};
+
+async function writeOutputToFile(data) {
+  try {
+    await fs.writeFile(OUTPUT_FILE_PATH, JSON.stringify(consoleOutput, null, 2));
+    originalConsoleLog(`Salidad de la terminal guardada en ${OUTPUT_FILE_PATH}`);
+  } catch (error) {
+    origianlConsoleError(`Error al escribir en ${OUTPUT_FILE_PATH}:`, error);
+  }
+}
+
 
 // Función para procesar cada organización
 async function processOrganizacion(organizacion, sedesMap) {
@@ -163,9 +187,13 @@ async function main() {
       await processOrganizacion(organizacion, sedesMap);
     }
 
-    //   console.log("Proceso completado.");
+    console.log("Proceso completado.");
   } catch (error) {
     console.error("Error:", error.message);
+  } finally {
+    await writeOutputToFile();
+    console.log = originalConsoleLog;
+    console.error = origianlConsoleError;
   }
 }
 
