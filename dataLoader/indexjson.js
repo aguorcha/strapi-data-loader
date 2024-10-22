@@ -2,12 +2,15 @@ const fs = require("fs").promises;
 const axios = require("axios");
 const dotenv = require("dotenv");
 const util = require('util');
+const path = require("path");
 dotenv.config();
 
 const {
   createTranslation,
   cleanLoadedData,
   sendToStrapi,
+  uploadLogo,
+  updateOrganizacionLogo,
 } = require("./api.js");
 const {
   readJSON,
@@ -34,18 +37,27 @@ const AREAS_FILE_PATH = FILE_PATH + "areas.json";
 const COLECTIVOS_FILE_PATH = FILE_PATH + "colectivos.json";
 const MACRO_AREAS_FILE_PATH = FILE_PATH + "macroareas.json";
 const SEDES_FILE_PATH = FILE_PATH + "sedes.json";
-const OUTPUT_FILE_PATH = FILE_PATH + "output.json";
+const OUTPUT_FILE_PATH = FILE_PATH + "output.json"; 
+const LOGOS_PATH = FILE_PATH + "logos/";
 
 let consoleOutput = [];
 const originalConsoleLog = console.log;
-const origianlConsoleError = console.error;
+const originalConsoleError = console.error;
+
 console.log = (...args) => {
-  consoleOutput.push(util.format(...args));
+  const formattedArgs = args.map(arg => {
+    return typeof arg === "object" ? JSON.stringify(arg, null, 2) : util.format(arg);
+  });
+  consoleOutput.push(...formattedArgs);
   originalConsoleLog(...args);
 };
+
 console.error = (...args) => {
-  consoleOutput.push(util.format(...args));
-  origianlConsoleError(...args);
+  const formattedArgs = args.map(arg => {
+    return typeof arg === "object" ? JSON.stringify(arg, null, 2) : util.format(arg);
+  });
+  consoleOutput.push(...formattedArgs);
+  originalConsoleError(...args);
 };
 
 async function writeOutputToFile(data) {
@@ -53,10 +65,9 @@ async function writeOutputToFile(data) {
     await fs.writeFile(OUTPUT_FILE_PATH, JSON.stringify(consoleOutput, null, 2));
     originalConsoleLog(`Salidad de la terminal guardada en ${OUTPUT_FILE_PATH}`);
   } catch (error) {
-    origianlConsoleError(`Error al escribir en ${OUTPUT_FILE_PATH}:`, error);
+    originalConsoleError(`Error al escribir en ${OUTPUT_FILE_PATH}:`, error);
   }
 }
-
 
 // Función para procesar cada organización
 async function processOrganizacion(organizacion, sedesMap) {
@@ -71,19 +82,40 @@ async function processOrganizacion(organizacion, sedesMap) {
     })
     .filter((id) => id !== null);
 
+      // Cargar el logo
+  let logoId = null;
+  if (organizacion.logo && organizacion.logo[0]) {
+    const logoPath = path.join(LOGOS_PATH, organizacion.logo[0]);
+    try {
+      logoId = await uploadLogo(logoPath, STRAPI_API_TOKEN, STRAPI_URL);
+    } catch (error) {
+      console.error(`No se pudo subir el logo para ${organizacion.nombre}`);
+    }
+  }
+
   const organizacionData = prepareOrganizacionData(
     organizacion,
     sedesIds,
-    "es"
+    "es",
+    logoId
   );
   const response = await sendToStrapi(organizacionData, "organizaciones");
   const documentId = response.data.documentId;
+
+  if (logoId) {
+    try {
+      await updateOrganizacionLogo(documentId, logoId, STRAPI_API_TOKEN, STRAPI_URL);
+    } catch (error) {
+      console.error(`No se pudo asociar el logo para ${organizacion.nombre}:`, error.message);
+    }
+  }
 
   for (const locale of EXTRA_LOCALE) {
     const localeOrganizacionData = prepareOrganizacionDataLocale(
       organizacion,
       locale,
-      sedesIds
+      sedesIds,
+      logoId
     );
     console.log(documentId, locale, localeOrganizacionData);
     await createTranslation(
@@ -98,10 +130,16 @@ async function processOrganizacion(organizacion, sedesMap) {
 }
 
 // Función para preparar los datos de la organización
-function prepareOrganizacionData(organizacion, sedesIds, _locale = "es") {
+function prepareOrganizacionData(organizacion, sedesIds, _locale = "es", logoId = null) {
   const { id, ...restData } = organizacion;
   let cleanedData = omitEmptyFields(restData);
-  cleanedData.logo = cleanedData.logo[0]??'';
+
+  if (logoId) {
+    cleanedData.logo = logoId;
+  } else {
+    delete cleanedData.logo;
+  }
+
   // Para el idioma por defecto, envía los campos sin sufijo
   if (_locale === "es") {
     cleanedData.descripcion_general = cleanedData.descripcion_general;
@@ -124,11 +162,15 @@ function prepareOrganizacionData(organizacion, sedesIds, _locale = "es") {
   };
 }
 
-function prepareOrganizacionDataLocale(organizacion, _locale = "es", sedesIds) {
+function prepareOrganizacionDataLocale(organizacion, _locale = "es", sedesIds, logoId = null) {
   const { id, ...restData } = organizacion;
   let cleanedData = omitEmptyFields(restData);
-    cleanedData.logo = cleanedData.logo[0] ?? "";
 
+  if (logoId) {
+    cleanedData.logo = logoId;
+  } else {
+    delete cleanedData.logo;
+  }
 
   // Asignar los campos que se debe "traducir" según el idioma
   if (_locale !== "es") {
@@ -193,7 +235,7 @@ async function main() {
   } finally {
     await writeOutputToFile();
     console.log = originalConsoleLog;
-    console.error = origianlConsoleError;
+    console.error = originalConsoleError;
   }
 }
 
