@@ -28,7 +28,7 @@ const { createAreasAndMacro } = require("./areas.js");
 const { createColectivos } = require("./colectivosProc.js");
 const { processAllSedes } = require("./sedesProc.js");
 
-const FILE_PATH = "./";
+const FILE_PATH = "../dataProc/";
 const ORGANIZACIONES_FILE_PATH = FILE_PATH + "organizaciones.json";
 const AREAS_FILE_PATH = FILE_PATH + "areas.json";
 const COLECTIVOS_FILE_PATH = FILE_PATH + "colectivos.json";
