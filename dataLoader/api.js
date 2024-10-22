@@ -1,20 +1,21 @@
-const axios = require('axios');
-const fs = require('fs');
-const FormData = require('form-data');
-const {
-  STRAPI_URL,
-  STRAPI_API_TOKEN
-} = require("./config.js");
+const axios = require("axios");
+const { openAsBlob } = require("node:fs");
+const fs = require("fs");
+const FormData = require("form-data");
+const { STRAPI_URL, STRAPI_API_TOKEN } = require("./config.js");
 
 async function uploadLogo(logoPath, STRAPI_API_TOKEN, STRAPI_URL) {
   try {
     const formData = new FormData();
-    formData.append('files', fs.createReadStream(logoPath));
+//    const file = openAsBlob(logoPath, { type: "image/png" });
+        formData.append("files", fs.createReadStream(logoPath),logoPath);
+
+   // formData.append("files", file, logoPath);
 
     const response = await axios.post(`${STRAPI_URL}/api/upload`, formData, {
       headers: {
-        ...formData.getHeaders(),
-        Authorization: `Bearer ${STRAPI_API_TOKEN}`,
+      Authorization: `Bearer ${STRAPI_API_TOKEN}`,
+      ...formData.getHeaders(),
       },
     });
 
@@ -27,6 +28,7 @@ async function uploadLogo(logoPath, STRAPI_API_TOKEN, STRAPI_URL) {
         "Respuesta del servidor",
         JSON.stringify(error.response.data, null, 2)
       );
+      process.exit(1);
     }
     throw error;
   }
@@ -59,7 +61,9 @@ async function createTranslation(
     if (response.status === 200) {
       console.log(`Traducción en '${locale}' creada con éxito.`);
     } else {
-      console.log(`Traducción en '${locale}' no se pudo crear. Estado: ${response.status}`);
+      console.log(
+        `Traducción en '${locale}' no se pudo crear. Estado: ${response.status}`
+      );
     }
   } catch (error) {
     console.error(`Error al crear traducción en '${locale}':`, error.message);
@@ -109,17 +113,14 @@ async function sendToStrapi(data, contentType) {
 async function cleanLoadedData() {
   try {
     console.log("Limpiando datos existentes en Strapi...");
-    
-    const response = await axios.get(
-      `${STRAPI_URL}/api/sedes/clean`,
-      {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${STRAPI_API_TOKEN}`,
-        },
-      }
-    );
-    
+
+    const response = await axios.get(`${STRAPI_URL}/api/sedes/clean`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${STRAPI_API_TOKEN}`,
+      },
+    });
+
     console.log("Datos limpiados exitosamente.");
     return response.data;
   } catch (error) {
@@ -135,7 +136,12 @@ async function cleanLoadedData() {
 }
 
 // Función que asigna el logo a la organización
-async function updateOrganizacionLogo(documentId, logoId, STRAPI_API_TOKEN, STRAPI_URL) {
+async function updateOrganizacionLogo(
+  documentId,
+  logoId,
+  STRAPI_API_TOKEN,
+  STRAPI_URL
+) {
   try {
     const response = await axios.put(
       `${STRAPI_URL}/api/organizaciones/${documentId}`,
@@ -150,7 +156,9 @@ async function updateOrganizacionLogo(documentId, logoId, STRAPI_API_TOKEN, STRA
     console.log(`Logo actualizado para la organización con ID ${documentId}`);
     return response.data;
   } catch (error) {
-    console.error(`Error al actualizar el logo para la organización con ID ${documentId}`);
+    console.error(
+      `Error al actualizar el logo para la organización con ID ${documentId}`
+    );
     throw error;
   }
 }

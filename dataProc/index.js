@@ -28,11 +28,33 @@ const tableNames = [
 
 
 async function downloadImage(url, filepath) {
+//1º get download link
+  let imagePath = url.substring(url.indexOf('images'));
+  console.log(config.headers.Authorization);
+  imagePath = decodeURIComponent(imagePath);
+  const linkResponse = await axios.get(
+    "https://cloud.seatable.io/api/v2.1/dtable/app-download-link/",
+    {
+      headers: {
+        accept: "application/json",
+        Authorization: "Bearer " + apptoken,
+      },
+
+      params: {
+        path: imagePath,
+      },
+    }
+  );
+
+  const link = linkResponse.data.download_link;
+
   const response = await axios({
-    url,
+    headers:config.headers,    
+    url:link,
     method: 'GET',
     responseType: 'stream'
   });
+
   return new Promise((resolve, reject) => {
     response.data.pipe(fs.createWriteStream(filepath))
       .on('finish', () => resolve())
@@ -84,7 +106,7 @@ async function main() {
               if (!fs.existsSync(path.join(__dirname, 'logos'))) {
                 fs.mkdirSync(path.join(__dirname, 'logos'));
               }
-
+              console.log('Downloading logo:', logoUrl);
               await downloadImage(logoUrl, filepath);
               row.logo = [`/logos/${filename}`];
             }
@@ -105,7 +127,10 @@ async function main() {
         );
         console.log(response.data.rows.length + "rows saved to file.");
       })
-      .catch(function (error) {});
+      .catch(function (error) {
+        console.log(error);
+        process.exit(1);
+      });
       promisesList.push(p);
   }
   

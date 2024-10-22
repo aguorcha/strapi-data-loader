@@ -38,7 +38,7 @@ const COLECTIVOS_FILE_PATH = FILE_PATH + "colectivos.json";
 const MACRO_AREAS_FILE_PATH = FILE_PATH + "macroareas.json";
 const SEDES_FILE_PATH = FILE_PATH + "sedes.json";
 const OUTPUT_FILE_PATH = FILE_PATH + "output.json"; 
-const LOGOS_PATH = FILE_PATH + "logos/";
+const LOGOS_PATH = FILE_PATH + "";
 
 let consoleOutput = [];
 const originalConsoleLog = console.log;
@@ -89,7 +89,9 @@ async function processOrganizacion(organizacion, sedesMap) {
     try {
       logoId = await uploadLogo(logoPath, STRAPI_API_TOKEN, STRAPI_URL);
     } catch (error) {
+      
       console.error(`No se pudo subir el logo para ${organizacion.nombre}`);
+      process.exit(1);
     }
   }
 
@@ -102,13 +104,13 @@ async function processOrganizacion(organizacion, sedesMap) {
   const response = await sendToStrapi(organizacionData, "organizaciones");
   const documentId = response.data.documentId;
 
-  if (logoId) {
-    try {
-      await updateOrganizacionLogo(documentId, logoId, STRAPI_API_TOKEN, STRAPI_URL);
-    } catch (error) {
-      console.error(`No se pudo asociar el logo para ${organizacion.nombre}:`, error.message);
-    }
-  }
+  // if (logoId) {
+  //   try {
+  //     await updateOrganizacionLogo(documentId, logoId, STRAPI_API_TOKEN, STRAPI_URL);
+  //   } catch (error) {
+  //     console.error(`No se pudo asociar el logo para ${organizacion.nombre}:`, error.message);
+  //   }
+  // }
 
   for (const locale of EXTRA_LOCALE) {
     const localeOrganizacionData = prepareOrganizacionDataLocale(
