@@ -18,8 +18,7 @@ const { sendToStrapi } = require("./api.js");
 function preprocessColectivosData(colectivosData) {
   return colectivosData.map((colectivo) => {
     delete colectivo.sedes_prioritarias;
-    delete colectivo.sedes_exclusivas
-    delete colectivo.slug;
+    delete colectivo.sedes_exclusivas;
     colectivo.idfromjson = colectivo._id;
     const cleanedColectivo = omitEmptyFields(colectivo);
     // replace macrocolectivo seatable id with Strapi id
