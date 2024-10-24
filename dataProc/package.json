@@ -1,0 +1,17 @@
+{
+  "name": "servercivics",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+        "move": "mv areas.json ../../strapi-data-loader/ ;  mv macroareas.json ../../strapi-data-loader/ ;  mv organizaciones.json ../../strapi-data-loader/;  mv sedes.json ../../strapi-data-loader/;   mv colectivos.json ../../strapi-data-loader/"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^1.2.3",
+    "dotenv": "^16.4.5",
+    "qs": "^6.11.0"
+  }
+}

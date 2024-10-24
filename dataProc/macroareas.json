@@ -1,0 +1,211 @@
+{
+  "rows": [
+    {
+      "slug": "salud",
+      "nombre_es": "Salud",
+      "nombre_en": null,
+      "nombre_fr": null,
+      "nombre_ar": null,
+      "areas": [
+        "UCT9EDQsS8-_IXdBHX5WIA",
+        "Me62CoNARXyTZc7WFoP49g",
+        "f7SKNZE8TWyTXi1u386LBg",
+        "NTz4GrvrSbGq_dTeLTQKtw",
+        "Ag7qMvssSmitiK_cTaKKMg",
+        "eZ3b-68gSVexYUMscuiIPQ",
+        "MRjS7HQUSOOzNf0mA29R2g",
+        "ZdG2KdwzTPiO1oYazA-fRg"
+      ],
+      "_locked": null,
+      "_locked_by": null,
+      "_archived": false,
+      "_creator": "f11574975cc34140999360142aab0f52@auth.local",
+      "_ctime": "2024-08-15T16:58:19.863+00:00",
+      "_last_modifier": "488542c67812421cb49e35d7d98f179a@auth.local",
+      "_mtime": "2024-10-24T11:11:54.185+00:00",
+      "_id": "aw4AHnHwRG2hlKL7eHWMaA"
+    },
+    {
+      "slug": "educacion",
+      "nombre_es": "Educación",
+      "nombre_en": null,
+      "nombre_fr": null,
+      "nombre_ar": null,
+      "areas": [
+        "Wfb4QlmAQcSGiPSqam3u5w",
+        "Pr-F_wOBQA-WKy_eRMYo9A",
+        "YS3DfWjTT92Jc9qYi0hd5Q",
+        "Wa6PVCZgRdiYNZ6cOkUDbg",
+        "TcrnAA-FSmaDJ9kwCoeVWg",
+        "D_5g-s4ZRmmZWPlFQsV0_A",
+        "amgRSL8GT6uUK9ikpNAA0g"
+      ],
+      "_locked": null,
+      "_locked_by": null,
+      "_archived": false,
+      "_creator": "f11574975cc34140999360142aab0f52@auth.local",
+      "_ctime": "2024-08-15T16:58:24.118+00:00",
+      "_last_modifier": "488542c67812421cb49e35d7d98f179a@auth.local",
+      "_mtime": "2024-10-24T11:12:01.049+00:00",
+      "_id": "AEoL8WWJTIGRcm6tlIbMng"
+    },
+    {
+      "slug": "vivienda",
+      "nombre_es": "Vivienda",
+      "nombre_en": null,
+      "nombre_fr": null,
+      "nombre_ar": null,
+      "areas": [
+        "N92IWbCnTteN4svhC_qYjA",
+        "fLZ-IhSmR7S6FQkbsswh0w",
+        "F37sWC4yRL2oMLc8rVPTEA",
+        "DD_046PpSr6CcTgreYWSaw",
+        "M9SrwayuRZitDiQhJ6nWRQ",
+        "fXUh-xUfRB-CRTwAZt9w9Q"
+      ],
+      "_locked": null,
+      "_locked_by": null,
+      "_archived": false,
+      "_creator": "f11574975cc34140999360142aab0f52@auth.local",
+      "_ctime": "2024-08-15T16:58:29.511+00:00",
+      "_last_modifier": "488542c67812421cb49e35d7d98f179a@auth.local",
+      "_mtime": "2024-10-24T11:12:08.785+00:00",
+      "_id": "X9IUD3eHTAWlKzefWv-CCA"
+    },
+    {
+      "slug": "empleo",
+      "nombre_es": "Empleo",
+      "nombre_en": null,
+      "nombre_fr": null,
+      "nombre_ar": null,
+      "areas": [
+        "CAKIo-c9SLCuPp3_Kb2oow",
+        "EXtN9cmCTFWyI4Xn49xGxA",
+        "Ri4KdMQ5T4mIYtQl1LxxRQ"
+      ],
+      "_locked": null,
+      "_locked_by": null,
+      "_archived": false,
+      "_creator": "f11574975cc34140999360142aab0f52@auth.local",
+      "_ctime": "2024-08-15T16:58:47.013+00:00",
+      "_last_modifier": "488542c67812421cb49e35d7d98f179a@auth.local",
+      "_mtime": "2024-10-24T11:12:13.219+00:00",
+      "_id": "SNxaOVEZQIeIoV9O8P2X4g"
+    },
+    {
+      "slug": "asesoria-juridica-legal",
+      "nombre_es": "Asesoría jurídica y legal",
+      "nombre_en": null,
+      "nombre_fr": null,
+      "nombre_ar": null,
+      "areas": [
+        "fWEsNGQ6QHWZDCWo71rXGg",
+        "UC2ZhptxRpOdcvDFIIVo-w",
+        "fUETp2NhSTC5z88TlBCwdw",
+        "UDHKFq3oTZGwx1Rir9WvUA",
+        "NGXcZU6bTWyOvhxyivchXQ"
+      ],
+      "_locked": null,
+      "_locked_by": null,
+      "_archived": false,
+      "_creator": "6e665f59197f45a4b832c45296705692@auth.local",
+      "_ctime": "2024-10-07T11:39:32.857+00:00",
+      "_last_modifier": "488542c67812421cb49e35d7d98f179a@auth.local",
+      "_mtime": "2024-10-24T11:12:18.228+00:00",
+      "_id": "IaI3U58WRa2w6NR6u2LJhg"
+    },
+    {
+      "slug": "servicios-basicos",
+      "nombre_es": "Servicios básicos",
+      "nombre_en": null,
+      "nombre_fr": null,
+      "nombre_ar": null,
+      "areas": [
+        "Nu9lDeSnTqKZXohbYhHX7g",
+        "NZajE5kbSaeAgB1EEZprVw",
+        "Cep0F84LRyiYkjCsEc8nfQ"
+      ],
+      "_locked": null,
+      "_locked_by": null,
+      "_archived": false,
+      "_creator": "f11574975cc34140999360142aab0f52@auth.local",
+      "_ctime": "2024-08-15T16:58:55.288+00:00",
+      "_last_modifier": "488542c67812421cb49e35d7d98f179a@auth.local",
+      "_mtime": "2024-10-24T11:12:26.554+00:00",
+      "_id": "es4p3RwjRbi7nBLbibcrTg"
+    },
+    {
+      "slug": "traduccion-mediacion-intercultural",
+      "nombre_es": "Traducción y mediación intercultural",
+      "nombre_en": null,
+      "nombre_fr": null,
+      "nombre_ar": null,
+      "areas": [
+        "AJVvN7RNQGygoT68SomHSQ",
+        "V2mWPtr0QQ-9xvl3MphLkg"
+      ],
+      "_locked": null,
+      "_locked_by": null,
+      "_archived": false,
+      "_creator": "f11574975cc34140999360142aab0f52@auth.local",
+      "_ctime": "2024-08-15T16:58:59.468+00:00",
+      "_last_modifier": "488542c67812421cb49e35d7d98f179a@auth.local",
+      "_mtime": "2024-10-24T11:12:36.948+00:00",
+      "_id": "RvxuhJGFTs6sSJuhHf-acA"
+    },
+    {
+      "slug": "ocio",
+      "nombre_es": "Ocio",
+      "nombre_en": null,
+      "nombre_fr": null,
+      "nombre_ar": null,
+      "areas": [
+        "Clv3N2arTbu87iDAuDiUkA",
+        "E8_A_bA1SUKHFKKthEDSZA",
+        "JjYMoiwvTMKmtWzGCJuCNw"
+      ],
+      "_locked": null,
+      "_locked_by": null,
+      "_archived": false,
+      "_creator": "f11574975cc34140999360142aab0f52@auth.local",
+      "_ctime": "2024-08-15T16:59:03.664+00:00",
+      "_last_modifier": "488542c67812421cb49e35d7d98f179a@auth.local",
+      "_mtime": "2024-10-24T11:12:38.023+00:00",
+      "_id": "ezbbF-t8TjKs1_3Q6XHy2w"
+    },
+    {
+      "slug": "publicaciones",
+      "nombre_es": "Publicaciones",
+      "nombre_en": null,
+      "nombre_fr": null,
+      "nombre_ar": null,
+      "areas": [
+        "ErOLotKLQhevEqGltab48A"
+      ],
+      "_locked": null,
+      "_locked_by": null,
+      "_archived": false,
+      "_creator": "f11574975cc34140999360142aab0f52@auth.local",
+      "_ctime": "2024-09-17T12:19:29.818+00:00",
+      "_last_modifier": "488542c67812421cb49e35d7d98f179a@auth.local",
+      "_mtime": "2024-10-24T11:12:43.608+00:00",
+      "_id": "Jc1-Ly1iQuSUuZ21AxskTQ"
+    },
+    {
+      "slug": null,
+      "nombre_es": null,
+      "nombre_en": null,
+      "nombre_fr": null,
+      "nombre_ar": null,
+      "areas": [],
+      "_locked": null,
+      "_locked_by": null,
+      "_archived": false,
+      "_creator": "6e665f59197f45a4b832c45296705692@auth.local",
+      "_ctime": "2024-09-27T08:26:45.471+00:00",
+      "_last_modifier": "6e665f59197f45a4b832c45296705692@auth.local",
+      "_mtime": "2024-10-07T11:37:16.816+00:00",
+      "_id": "ewi11E9MTiOMEwYKcngtGg"
+    }
+  ]
+}
