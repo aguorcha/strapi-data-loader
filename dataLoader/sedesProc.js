@@ -52,8 +52,8 @@ async function processAllSedes(
     }
 
     try {
-      const response = await sendToStrapi(sedeData, "sedes");
       console.log(sedeData);
+      const response = await sendToStrapi(sedeData, "sedes");
       const documentId = response.data.documentId;
       sedesMap.set(sede._id, {
         strapiId: response.data.id,
@@ -97,9 +97,9 @@ function prepareSedeData(sede, organizacionesMap, _locale = "es") {
     delete cleanedData["listado_de_servicios_" + locale];
   }
 
-  const nombreSedeNombreOrganizacion = `${cleanedData.nombre_sede || ""} - ${
-    organizacionNombre || ""
-  }`.trim();
+  // const nombreSedeNombreOrganizacion = `${cleanedData.nombre_sede || ""} - ${
+  //   organizacionNombre || ""
+  // }`.trim();
 
   const coordinateObject = coordinatesJSON.find((element) => element.id === id);
 
@@ -116,7 +116,7 @@ function prepareSedeData(sede, organizacionesMap, _locale = "es") {
     ...cleanedData,
     idfromjson: id,
     organizacion: organizacionNombre,
-    nombreSedeNombreOrganizacion: nombreSedeNombreOrganizacion,
+    
   };
 }
 
