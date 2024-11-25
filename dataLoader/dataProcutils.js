@@ -58,10 +58,30 @@ function omitEmptyFields(data) {
           cleanedData[key] = value;
         }
       }
+      // remove strange characters starting with &# and replace by its corresponding character
+      if (typeof cleanedData[key] === "string") {
+        cleanedData[key] = decodeHtmlEntities(cleanedData[key]);
+      }
     }
   }
   return cleanedData;
 }
+
+// Decode HTML entities
+// This function is used to decode HTML entities in the strings coming from seatable
+// replaces &#xHH; and &#DDD; with the corresponding character
+function decodeHtmlEntities(str) {
+  return str
+    .replace(/&#x([0-9A-Fa-f]+);|&#(\d+);/g, function (match, hex, dec) {
+      if (hex) {
+        return String.fromCharCode(parseInt(hex, 16));
+      } else if (dec) {
+        return String.fromCharCode(dec);
+      }
+    })
+    //.replace(/\n/g, "<br/>");
+}
+
 
 
 module.exports = {
