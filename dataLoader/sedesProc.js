@@ -104,11 +104,8 @@ function prepareSedeData(sede, organizacionesMap, _locale = "es") {
   const coordinateObject = coordinatesJSON.find((element) => element.id === id);
 
   if (coordinateObject) {
-    cleanedData.latitud = coordinateObject.latitude;
-    cleanedData.longitud = coordinateObject.longitude;
+    cleanedData.geodata = {"lat":coordinateObject.latitude, "lng":coordinateObject.longitude};
   } else {
-    cleanedData.latitud = 0;
-    cleanedData.longitud = 0;
     console.warn(`No se pudieron obtener coordenadas para la sede: ${id}`);
   }
 
