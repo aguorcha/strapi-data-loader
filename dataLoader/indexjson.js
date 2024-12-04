@@ -112,23 +112,23 @@ async function processOrganizacion(organizacion, sedesMap) {
   //   }
   // }
 
-  for (const locale of EXTRA_LOCALE) {
-    const localeOrganizacionData = prepareOrganizacionDataLocale(
-      organizacion,
-      locale,
-      sedesIds,
-      logoId
-    );
-    console.log(documentId, locale, localeOrganizacionData);
-    await createTranslation(
-      documentId,
-      locale,
-      localeOrganizacionData,
-      CONTENT_TYPES.ORGANIZACIONES,
-      STRAPI_API_TOKEN,
-      STRAPI_URL
-    );
-  }
+  // for (const locale of EXTRA_LOCALE) {
+  //   const localeOrganizacionData = prepareOrganizacionDataLocale(
+  //     organizacion,
+  //     locale,
+  //     sedesIds,
+  //     logoId
+  //   );
+  //   console.log(documentId, locale, localeOrganizacionData);
+  //   await createTranslation(
+  //     documentId,
+  //     locale,
+  //     localeOrganizacionData,
+  //     CONTENT_TYPES.ORGANIZACIONES,
+  //     STRAPI_API_TOKEN,
+  //     STRAPI_URL
+  //   );
+  // }
 }
 
 // Función para preparar los datos de la organización
@@ -143,19 +143,21 @@ function prepareOrganizacionData(organizacion, sedesIds, _locale = "es", logoId 
   }
 
   // Para el idioma por defecto, envía los campos sin sufijo
-  if (_locale === "es") {
-    cleanedData.descripcion_general = cleanedData.descripcion_general;
-    cleanedData.nombre_largo = cleanedData.nombre_largo;
-    cleanedData.listado_servicios_organizacion =
-      cleanedData.listado_servicios_organizacion;
-  }
+  //if (_locale === "es") {
+    cleanedData.descripcion_general_es = cleanedData.descripcion_general;
+    delete cleanedData.descripcion_general;
+    cleanedData.nombre_largo_es = cleanedData.nombre_largo;
+    delete cleanedData.nombre_largo;
+    cleanedData.listado_servicios_organizacion_es = cleanedData.listado_servicios_organizacion;
+    delete cleanedData.listado_servicios_organizacion;
+  //}
 
-  // Elimina los nombre de otros idiomas para no mandarlos
-  for (const locale of LOCALES) {
-    delete cleanedData["descripcion_general_" + locale];
-    delete cleanedData["nombre_largo_" + locale];
-    delete cleanedData["listado_servicios_organizacion_" + locale];
-  }
+  // // Elimina los nombre de otros idiomas para no mandarlos
+  // for (const locale of LOCALES) {
+  //   delete cleanedData["descripcion_general_" + locale];
+  //   delete cleanedData["nombre_largo_" + locale];
+  //   delete cleanedData["listado_servicios_organizacion_" + locale];
+  // }
 
   return {
     ...cleanedData,

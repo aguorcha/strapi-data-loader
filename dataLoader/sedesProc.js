@@ -60,22 +60,22 @@ async function processAllSedes(
         originalId: sede.id,
       });
 
-      for (const locale of EXTRA_LOCALE) {
-        const localeSedeData = prepareSedeData(
-          sede,
-          organizacionesMap,
-          locale
-        );
-        // console.log(locale, localeSedeData);
-        createTranslation(
-          documentId,
-          locale,
-          localeSedeData,
-          CONTENT_TYPES.SEDES,
-          STRAPI_API_TOKEN,
-          STRAPI_URL
-        );
-      }
+      // for (const locale of EXTRA_LOCALE) {
+      //   const localeSedeData = prepareSedeData(
+      //     sede,
+      //     organizacionesMap,
+      //     locale
+      //   );
+      //   // console.log(locale, localeSedeData);
+      //   createTranslation(
+      //     documentId,
+      //     locale,
+      //     localeSedeData,
+      //     CONTENT_TYPES.SEDES,
+      //     STRAPI_API_TOKEN,
+      //     STRAPI_URL
+      //   );
+      // }
     } catch (error) {
       console.error(`Error al procesar la sede ${sede.id}:`, error.message);
       process.exit(1);
@@ -91,11 +91,12 @@ function prepareSedeData(sede, organizacionesMap, _locale = "es") {
       ? organizacionesMap.get(organizacion[0])
       : null;
   let cleanedData = omitEmptyFields(restData);
-  cleanedData["listado_de_servicios_" + _locale] =
-    cleanedData["listado_de_servicios_" + _locale];
-  for (const locale of LOCALES) {
-    delete cleanedData["listado_de_servicios_" + locale];
-  }
+  cleanedData["listado_de_servicios_es"]  =
+    cleanedData["listado_de_servicios"];
+  delete cleanedData["listado_de_servicios"];
+  // for (const locale of LOCALES) {
+  //   delete cleanedData["listado_de_servicios_" + locale];
+  // }
 
   // const nombreSedeNombreOrganizacion = `${cleanedData.nombre_sede || ""} - ${
   //   organizacionNombre || ""
